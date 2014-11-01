@@ -30,7 +30,20 @@ namespace GameVoxHanging
             // Create a new Process object
             memoryDumpProcess = new Process();
             memoryDumpProcess.StartInfo.FileName = "procdump.exe";
-            memoryDumpProcess.StartInfo.Arguments = "-accepteula -ma GameVox.exe";
+
+            // We need to detect what type of hanging this will be -- so we need to see what's checked
+            var radioButton = gbGameVoxStatus.Controls.OfType<RadioButton>().SingleOrDefault(btn => btn.Checked == true);
+            switch(radioButton.Name)
+            {
+                case "rbGameVoxOperational":
+                    memoryDumpProcess.StartInfo.Arguments = "-accepteula -ma -h GameVox.exe";
+                    break;
+                case "rbGameVoxNotResponding":
+                default:
+                    memoryDumpProcess.StartInfo.Arguments = "-accepteula -ma GameVox.exe";
+                    break;
+            }
+            
             // Set UseShellExecute to false for redirection.
             memoryDumpProcess.StartInfo.UseShellExecute = false;
 
