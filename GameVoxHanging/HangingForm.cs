@@ -24,6 +24,13 @@ namespace GameVoxHanging
             // Clear the old output from any previous runs
             rtbConsoleOutput.Clear();
 
+            bool isGameVoxRunning = DetectIfGameVoxIsRunning();
+            if(!isGameVoxRunning)
+            {
+                MessageBox.Show("Please start GameVox before running the diagnostics.","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                return;
+            }
+
             // Disable the button so people don't click it a bunch of times
             btnMemoryDump.Enabled = false;
 
@@ -81,6 +88,19 @@ namespace GameVoxHanging
             {
                 rtbConsoleOutput.BeginInvoke(new MethodInvoker(() => rtbConsoleOutput.AppendText(output.Data + Environment.NewLine)));
             }
+        }
+
+        private bool DetectIfGameVoxIsRunning()
+        {
+            Process[] processes = Process.GetProcessesByName("GameVox");
+            foreach(Process process in processes)
+            {
+                if(process.MainModule.ModuleName == "GameVox.exe")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
