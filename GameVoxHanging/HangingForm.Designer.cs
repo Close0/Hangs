@@ -32,8 +32,8 @@
             this.rtbConsoleOutput = new System.Windows.Forms.RichTextBox();
             this.label = new System.Windows.Forms.Label();
             this.gbGameVoxStatus = new System.Windows.Forms.GroupBox();
-            this.rbGameVoxNotResponding = new System.Windows.Forms.RadioButton();
             this.rbGameVoxOperational = new System.Windows.Forms.RadioButton();
+            this.rbGameVoxNotResponding = new System.Windows.Forms.RadioButton();
             this.gbGameVoxStatus.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +51,9 @@
             // 
             this.rtbConsoleOutput.Location = new System.Drawing.Point(13, 91);
             this.rtbConsoleOutput.Name = "rtbConsoleOutput";
-            this.rtbConsoleOutput.Size = new System.Drawing.Size(347, 339);
+            this.rtbConsoleOutput.ReadOnly = true;
+            this.rtbConsoleOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
+            this.rtbConsoleOutput.Size = new System.Drawing.Size(488, 339);
             this.rtbConsoleOutput.TabIndex = 1;
             this.rtbConsoleOutput.Text = "";
             // 
@@ -74,6 +76,16 @@
             this.gbGameVoxStatus.TabStop = false;
             this.gbGameVoxStatus.Text = "GameVox is";
             // 
+            // rbGameVoxOperational
+            // 
+            this.rbGameVoxOperational.AutoSize = true;
+            this.rbGameVoxOperational.Location = new System.Drawing.Point(7, 44);
+            this.rbGameVoxOperational.Name = "rbGameVoxOperational";
+            this.rbGameVoxOperational.Size = new System.Drawing.Size(173, 17);
+            this.rbGameVoxOperational.TabIndex = 1;
+            this.rbGameVoxOperational.Text = "working correctly, but will hang.";
+            this.rbGameVoxOperational.UseVisualStyleBackColor = true;
+            // 
             // rbGameVoxNotResponding
             // 
             this.rbGameVoxNotResponding.AutoSize = true;
@@ -86,21 +98,11 @@
             this.rbGameVoxNotResponding.Text = "currently not responding.";
             this.rbGameVoxNotResponding.UseVisualStyleBackColor = true;
             // 
-            // rbGameVoxOperational
-            // 
-            this.rbGameVoxOperational.AutoSize = true;
-            this.rbGameVoxOperational.Location = new System.Drawing.Point(7, 44);
-            this.rbGameVoxOperational.Name = "rbGameVoxOperational";
-            this.rbGameVoxOperational.Size = new System.Drawing.Size(173, 17);
-            this.rbGameVoxOperational.TabIndex = 1;
-            this.rbGameVoxOperational.Text = "working correctly, but will hang.";
-            this.rbGameVoxOperational.UseVisualStyleBackColor = true;
-            // 
             // HangingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(379, 443);
+            this.ClientSize = new System.Drawing.Size(520, 443);
             this.Controls.Add(this.gbGameVoxStatus);
             this.Controls.Add(this.label);
             this.Controls.Add(this.rtbConsoleOutput);

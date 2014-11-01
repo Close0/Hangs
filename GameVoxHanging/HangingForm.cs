@@ -71,7 +71,7 @@ namespace GameVoxHanging
 
         private void MemoryDumpProcessExited(object sender, EventArgs e)
         {
-            rtbConsoleOutput.BeginInvoke(new MethodInvoker(delegate { btnMemoryDump.Enabled = true; }));
+            btnMemoryDump.BeginInvoke(new MethodInvoker(delegate { btnMemoryDump.Enabled = true; }));
             memoryDumpProcess.Dispose();
         }
 
@@ -79,7 +79,7 @@ namespace GameVoxHanging
         {
             if (!String.IsNullOrEmpty(output.Data))
             {
-                rtbConsoleOutput.BeginInvoke(new MethodInvoker(() => rtbConsoleOutput.AppendText(output.Data)));
+                rtbConsoleOutput.BeginInvoke(new MethodInvoker(() => rtbConsoleOutput.AppendText(output.Data + Environment.NewLine)));
             }
         }
     }
