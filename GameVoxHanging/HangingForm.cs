@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ namespace GameVoxHanging
     public partial class HangingForm : Form
     {
         private Process memoryDumpProcess;
+        private string lastConsoleLine;
         public HangingForm()
         {
             InitializeComponent();
@@ -78,8 +81,34 @@ namespace GameVoxHanging
 
         private void MemoryDumpProcessExited(object sender, EventArgs e)
         {
-            btnMemoryDump.BeginInvoke(new MethodInvoker(delegate { btnMemoryDump.Enabled = true; }));
+            // Release our console program
             memoryDumpProcess.Dispose();
+
+            // We are going to compress the dump file for a great size reduction and clean up the actual file
+            string currentDirectory = Directory.GetCurrentDirectory();
+            string[] files = Directory.GetFiles(currentDirectory, "GameVox.exe*.dmp");
+            foreach (string file in files)
+            {
+                string zipFileOutput = @currentDirectory + "\\GameVox Diagnostic - " + DateTime.Now.ToString("hh mm ss tt") + ".zip";
+                // http://stackoverflow.com/questions/25042141/compress-a-single-file-using-c-sharp
+                using (var zip = ZipFile.Open(zipFileOutput, ZipArchiveMode.Create))
+                {
+                    var entry = zip.CreateEntry("GameVoxDump.dmp");
+                    entry.LastWriteTime = DateTimeOffset.Now;
+
+                    using (var stream = File.OpenRead(file))
+                    using (var entryStream = entry.Open())
+                    {
+                        // Write the contents of the dump to the zip file
+                        stream.CopyTo(entryStream);
+                    }
+                    // Clean up the large dump file
+                    File.Delete(file);
+
+                    // Renable the button
+                    btnMemoryDump.BeginInvoke(new MethodInvoker(delegate { btnMemoryDump.Enabled = true; }));
+                }
+            }
         }
 
         private void MemoryDumpOutputHandler(object sender, DataReceivedEventArgs output)
@@ -87,6 +116,8 @@ namespace GameVoxHanging
             if (!String.IsNullOrEmpty(output.Data))
             {
                 rtbConsoleOutput.BeginInvoke(new MethodInvoker(() => rtbConsoleOutput.AppendText(output.Data + Environment.NewLine)));
+                // We are going to store the last console line so that way if we need it we can pull data out
+                lastConsoleLine = output.Data;
             }
         }
 
