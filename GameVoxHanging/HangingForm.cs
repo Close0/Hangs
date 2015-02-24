@@ -29,63 +29,6 @@ namespace GameVoxHanging
             materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
         }
 
-        private void btnMemoryDump_Click(object sender, EventArgs e)
-        {
-            // Clear the old output from any previous runs
-            rtbConsoleOutput.Clear();
-
-            bool isGameVoxRunning = DetectIfGameVoxIsRunning();
-            if(!isGameVoxRunning)
-            {
-                MessageBox.Show("Please start GameVox before running the diagnostics.","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                return;
-            }
-
-            // Disable the button so people don't click it a bunch of times
-            btnMemoryDump.Enabled = false;
-
-            // Create a new Process object
-            memoryDumpProcess = new Process();
-            memoryDumpProcess.StartInfo.FileName = "procdump.exe";
-
-            // We need to detect what type of hanging this will be -- so we need to see what's checked
-            var radioButton = gbGameVoxStatus.Controls.OfType<RadioButton>().SingleOrDefault(btn => btn.Checked == true);
-            switch(radioButton.Name)
-            {
-                case "rbGameVoxOperational":
-                    memoryDumpProcess.StartInfo.Arguments = "-accepteula -ma -h GameVox.exe";
-                    break;
-                case "rbGameVoxNotResponding":
-                default:
-                    memoryDumpProcess.StartInfo.Arguments = "-accepteula -ma GameVox.exe";
-                    break;
-            }
-            
-            // Set UseShellExecute to false for redirection.
-            memoryDumpProcess.StartInfo.UseShellExecute = false;
-
-            // We don't want a command prompt window showing so hide it
-            memoryDumpProcess.StartInfo.CreateNoWindow = true;
-
-            // We need to raise this so we can listen for things like Exited
-            memoryDumpProcess.EnableRaisingEvents = true;
-
-            // Redirect the standard output of the sort command.   
-            // This stream is read asynchronously using an event handler.
-            memoryDumpProcess.StartInfo.RedirectStandardOutput = true;
-
-            // Set our event handler to asynchronously read the sort output.
-            memoryDumpProcess.OutputDataReceived += new DataReceivedEventHandler(MemoryDumpOutputHandler);
-            // Set our event handler to asynchronously exit when finished
-            memoryDumpProcess.Exited += new EventHandler(MemoryDumpProcessExited);
-
-            // Need to start the process before I can start the reading
-            memoryDumpProcess.Start();
-
-            // Start the asynchronous read of the sort output stream.
-            memoryDumpProcess.BeginOutputReadLine();
-        }
-
         private void MemoryDumpProcessExited(object sender, EventArgs e)
         {
             // Release our console program
@@ -114,7 +57,7 @@ namespace GameVoxHanging
                     File.Delete(file);
 
                     // Renable the button
-                    btnMemoryDump.BeginInvoke(new MethodInvoker(delegate { btnMemoryDump.Enabled = true; }));
+                    btnMaterialDiagnostics.BeginInvoke(new MethodInvoker(delegate { btnMaterialDiagnostics.Enabled = true; }));
                 }
                 rtbConsoleOutput.BeginInvoke(new MethodInvoker(() => rtbConsoleOutput.AppendText("Please upload " + zipFileOutput + " to your preferred file hosting location and give GameVox the link to download the diagnostic file. " + Environment.NewLine)));
             }
@@ -141,6 +84,63 @@ namespace GameVoxHanging
                 }
             }
             return false;
+        }
+
+        private void btnMaterialDiagnostics_Click(object sender, EventArgs e)
+        {
+            // Clear the old output from any previous runs
+            rtbConsoleOutput.Clear();
+
+            bool isGameVoxRunning = DetectIfGameVoxIsRunning();
+            if (!isGameVoxRunning)
+            {
+                MessageBox.Show("Please start GameVox before running the diagnostics.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Disable the button so people don't click it a bunch of times
+            btnMaterialDiagnostics.Enabled = false;
+
+            // Create a new Process object
+            memoryDumpProcess = new Process();
+            memoryDumpProcess.StartInfo.FileName = "procdump.exe";
+
+            // We need to detect what type of hanging this will be -- so we need to see what's checked
+            var radioButton = HangingForm.ActiveForm.Controls.OfType<MaterialRadioButton>().SingleOrDefault(btn => btn.Checked == true);
+            switch (radioButton.Name)
+            {
+                case "rbMaterialWorkingCorrectly":
+                    memoryDumpProcess.StartInfo.Arguments = "-accepteula -ma -h GameVox.exe";
+                    break;
+                case "rbMaterialNotResponding":
+                default:
+                    memoryDumpProcess.StartInfo.Arguments = "-accepteula -ma GameVox.exe";
+                    break;
+            }
+
+            // Set UseShellExecute to false for redirection.
+            memoryDumpProcess.StartInfo.UseShellExecute = false;
+
+            // We don't want a command prompt window showing so hide it
+            memoryDumpProcess.StartInfo.CreateNoWindow = true;
+
+            // We need to raise this so we can listen for things like Exited
+            memoryDumpProcess.EnableRaisingEvents = true;
+
+            // Redirect the standard output of the sort command.   
+            // This stream is read asynchronously using an event handler.
+            memoryDumpProcess.StartInfo.RedirectStandardOutput = true;
+
+            // Set our event handler to asynchronously read the sort output.
+            memoryDumpProcess.OutputDataReceived += new DataReceivedEventHandler(MemoryDumpOutputHandler);
+            // Set our event handler to asynchronously exit when finished
+            memoryDumpProcess.Exited += new EventHandler(MemoryDumpProcessExited);
+
+            // Need to start the process before I can start the reading
+            memoryDumpProcess.Start();
+
+            // Start the asynchronous read of the sort output stream.
+            memoryDumpProcess.BeginOutputReadLine();
         }
     }
 }
