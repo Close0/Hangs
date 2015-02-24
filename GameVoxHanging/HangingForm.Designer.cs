@@ -34,6 +34,8 @@
             this.rbMaterialWorkingCorrectly = new MaterialSkin.Controls.MaterialRadioButton();
             this.labelDescribeState = new MaterialSkin.Controls.MaterialLabel();
             this.btnMaterialDiagnostics = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // rtbConsoleOutput
@@ -115,11 +117,22 @@
             this.btnMaterialDiagnostics.UseVisualStyleBackColor = true;
             this.btnMaterialDiagnostics.Click += new System.EventHandler(this.btnMaterialDiagnostics_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::GameVoxHanging.Properties.Resources.GameVox_icon_bw_black1;
+            this.pictureBox1.Location = new System.Drawing.Point(331, 71);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(193, 127);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
             // HangingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 566);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnMaterialDiagnostics);
             this.Controls.Add(this.labelDescribeState);
             this.Controls.Add(this.rbMaterialWorkingCorrectly);
@@ -128,6 +141,7 @@
             this.Controls.Add(this.rtbConsoleOutput);
             this.Name = "HangingForm";
             this.Text = "GameVox Hanging Diagnostics";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,6 +155,7 @@
         private MaterialSkin.Controls.MaterialRadioButton rbMaterialWorkingCorrectly;
         private MaterialSkin.Controls.MaterialLabel labelDescribeState;
         private MaterialSkin.Controls.MaterialRaisedButton btnMaterialDiagnostics;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
