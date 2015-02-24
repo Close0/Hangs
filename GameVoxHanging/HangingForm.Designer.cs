@@ -39,9 +39,9 @@
             // 
             // btnMemoryDump
             // 
-            this.btnMemoryDump.Location = new System.Drawing.Point(219, 13);
+            this.btnMemoryDump.Location = new System.Drawing.Point(219, 114);
             this.btnMemoryDump.Name = "btnMemoryDump";
-            this.btnMemoryDump.Size = new System.Drawing.Size(141, 72);
+            this.btnMemoryDump.Size = new System.Drawing.Size(141, 28);
             this.btnMemoryDump.TabIndex = 0;
             this.btnMemoryDump.Text = "Start diagnostics now";
             this.btnMemoryDump.UseVisualStyleBackColor = true;
@@ -49,11 +49,11 @@
             // 
             // rtbConsoleOutput
             // 
-            this.rtbConsoleOutput.Location = new System.Drawing.Point(13, 91);
+            this.rtbConsoleOutput.Location = new System.Drawing.Point(12, 148);
             this.rtbConsoleOutput.Name = "rtbConsoleOutput";
             this.rtbConsoleOutput.ReadOnly = true;
             this.rtbConsoleOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-            this.rtbConsoleOutput.Size = new System.Drawing.Size(488, 339);
+            this.rtbConsoleOutput.Size = new System.Drawing.Size(493, 339);
             this.rtbConsoleOutput.TabIndex = 1;
             this.rtbConsoleOutput.Text = "";
             // 
@@ -69,7 +69,7 @@
             // 
             this.gbGameVoxStatus.Controls.Add(this.rbGameVoxOperational);
             this.gbGameVoxStatus.Controls.Add(this.rbGameVoxNotResponding);
-            this.gbGameVoxStatus.Location = new System.Drawing.Point(13, 13);
+            this.gbGameVoxStatus.Location = new System.Drawing.Point(13, 70);
             this.gbGameVoxStatus.Name = "gbGameVoxStatus";
             this.gbGameVoxStatus.Size = new System.Drawing.Size(200, 72);
             this.gbGameVoxStatus.TabIndex = 3;
@@ -102,7 +102,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(520, 443);
+            this.ClientSize = new System.Drawing.Size(517, 499);
             this.Controls.Add(this.gbGameVoxStatus);
             this.Controls.Add(this.label);
             this.Controls.Add(this.rtbConsoleOutput);
