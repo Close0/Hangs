@@ -89,6 +89,7 @@ namespace GameVoxHanging
             string[] files = Directory.GetFiles(currentDirectory, "GameVox.exe*.dmp");
             foreach (string file in files)
             {
+                rtbConsoleOutput.BeginInvoke(new MethodInvoker(() => rtbConsoleOutput.AppendText("Compressing and zipping the diagnostic files, please wait ..." + Environment.NewLine)));
                 string zipFileOutput = @currentDirectory + "\\GameVox Diagnostic - " + DateTime.Now.ToString("hh mm ss tt") + ".zip";
                 // http://stackoverflow.com/questions/25042141/compress-a-single-file-using-c-sharp
                 using (var zip = ZipFile.Open(zipFileOutput, ZipArchiveMode.Create))
@@ -108,6 +109,7 @@ namespace GameVoxHanging
                     // Renable the button
                     btnMemoryDump.BeginInvoke(new MethodInvoker(delegate { btnMemoryDump.Enabled = true; }));
                 }
+                rtbConsoleOutput.BeginInvoke(new MethodInvoker(() => rtbConsoleOutput.AppendText("Please upload " + zipFileOutput + " to your preferred file hosting location and give GameVox the link to download the diagnostic file. " + Environment.NewLine)));
             }
         }
 

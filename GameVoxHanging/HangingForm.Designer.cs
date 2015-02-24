@@ -108,7 +108,7 @@
             this.Controls.Add(this.rtbConsoleOutput);
             this.Controls.Add(this.btnMemoryDump);
             this.Name = "HangingForm";
-            this.Text = "Form1";
+            this.Text = "GameVox Hanging Diagnostics";
             this.gbGameVoxStatus.ResumeLayout(false);
             this.gbGameVoxStatus.PerformLayout();
             this.ResumeLayout(false);
